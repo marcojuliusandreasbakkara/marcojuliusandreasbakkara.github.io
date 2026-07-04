@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Marco Julius Andreas Bakkara — Portofolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;0,9..144,600;1,9..144,500&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#14120f;
+    --ink-2:#1c1913;
+    --ivory:#f2ecdc;
+    --ivory-dim:#c9c3af;
+    --walnut:#7a4b27;
+    --walnut-dark:#4a2d17;
+    --gold:#c6a15b;
+    --slate:#9c9686;
+    --line: rgba(242,236,220,0.12);
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--ink);
+    color:var(--ivory);
+    font-family:'Inter',sans-serif;
+    overflow-x:hidden;
+    cursor:default;
+  }
+  ::selection{background:var(--gold);color:var(--ink);}
+
+  h1,h2,h3{font-family:'Fraunces',serif;font-weight:500;letter-spacing:-0.01em;}
+  .eyebrow{
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.72rem;
+    letter-spacing:0.22em;
+    text-transform:uppercase;
+    color:var(--gold);
+    display:inline-block;
+    margin-bottom:1rem;
+  }
+
+  /* ---------- NAV ---------- */
+  nav{
+    position:fixed;top:0;left:0;right:0;z-index:100;
+    display:flex;justify-content:space-between;align-items:center;
+    padding:1.6rem clamp(1.5rem,5vw,4rem);
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.75rem;letter-spacing:0.1em;
+    mix-blend-mode:difference;
+    pointer-events:none;
+  }
+  nav .mark{color:var(--ivory);font-weight:500;}
+  nav .coord{color:var(--slate);}
+
+  /* ---------- HERO ---------- */
+  .hero{
+    position:relative;
+    height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    perspective:1400px;
+    overflow:hidden;
+    background:
+      radial-gradient(ellipse at 50% 20%, rgba(198,161,91,0.10), transparent 60%),
+      var(--ink);
+  }
+  .board3d{
+    position:absolute;
+    left:50%;top:58%;
+    width:640px;height:640px;
+    transform:translate(-50%,-50%) rotateX(58deg) rotateZ(45deg);
+    transform-style:preserve-3d;
+    display:grid;
+    grid-template-columns:repeat(8,1fr);
+    grid-template-rows:repeat(8,1fr);
+    box-shadow:0 0 120px rgba(0,0,0,0.6);
+    opacity:0.9;
+    will-change:transform;
+  }
+  .sq{background:var(--ivory-dim);}
+  .sq.dark{background:var(--walnut-dark);}
+
+  .hero-piece{
+    position:absolute;
+    opacity:0.9;
+    filter:drop-shadow(0 20px 30px rgba(0,0,0,0.5));
+    will-change:transform;
+  }
+
+  .hero-content{
+    position:relative;
+    z-index:5;
+    text-align:center;
+    padding:0 1.5rem;
+  }
+  .hero-content .eyebrow{margin-bottom:1.4rem;}
+  .hero-content h1{
+    font-size:clamp(2.4rem,7vw,5.4rem);
+    line-height:1.02;
+    color:var(--ivory);
+  }
+  .hero-content h1 em{
+    font-style:italic;
+    color:var(--gold);
+    font-weight:500;
+  }
+  .hero-sub{
+    margin-top:1.6rem;
+    font-family:'JetBrains Mono',monospace;
+    color:var(--ivory-dim);
+    font-size:0.95rem;
+    letter-spacing:0.03em;
+  }
+  .scroll-cue{
+    position:absolute;
+    bottom:2.4rem;left:50%;transform:translateX(-50%);
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.7rem;letter-spacing:0.2em;color:var(--slate);
+    display:flex;flex-direction:column;align-items:center;gap:0.6rem;
+  }
+  .scroll-cue .line{
+    width:1px;height:38px;background:linear-gradient(var(--gold),transparent);
+    animation:pulseLine 2s ease-in-out infinite;
+  }
+  @keyframes pulseLine{
+    0%,100%{opacity:0.3;} 50%{opacity:1;}
+  }
+
+  /* ---------- SECTIONS SHARED ---------- */
+  section{
+    position:relative;
+    padding:min(14vh,9rem) clamp(1.5rem,7vw,7rem);
+  }
+  .section-inner{max-width:980px;margin:0 auto;position:relative;}
+  .section-head{margin-bottom:4rem;}
+  .section-head h2{font-size:clamp(1.9rem,4vw,3rem);}
+  .section-head .num{
+    font-family:'JetBrains Mono',monospace;
+    color:var(--walnut);
+    font-size:0.8rem;
+    display:block;
+  }
+
+  .file-rank-bg{
+    position:absolute;inset:0;
+    pointer-events:none;
+    display:grid;grid-template-columns:repeat(8,1fr);
+    opacity:0.05;z-index:0;
+  }
+  .file-rank-bg span{
+    text-align:center;font-family:'JetBrains Mono',monospace;
+    font-size:14vw;color:var(--ivory);line-height:1;
+  }
+
+  /* ---------- ABOUT ---------- */
+  .about{background:var(--ink);}
+  .about-grid{
+    display:grid;
+    grid-template-columns:1.1fr 0.9fr;
+    gap:3rem;
+    align-items:start;
+  }
+  @media(max-width:760px){.about-grid{grid-template-columns:1fr;}}
+  .about-text p{
+    color:var(--ivory-dim);
+    font-size:1.05rem;
+    line-height:1.85;
+    margin-bottom:1.2rem;
+  }
+  .id-card{
+    border:1px solid var(--line);
+    background:linear-gradient(180deg, rgba(198,161,91,0.05), transparent);
+    padding:2rem;
+    border-radius:2px;
+  }
+  .id-card .row{
+    display:flex;justify-content:space-between;
+    padding:0.85rem 0;
+    border-bottom:1px dashed var(--line);
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.85rem;
+  }
+  .id-card .row:last-child{border-bottom:none;}
+  .id-card .row span:first-child{color:var(--slate);}
+  .id-card .row span:last-child{color:var(--ivory);text-align:right;}
+
+  /* ---------- TIMELINE / PENDIDIKAN ---------- */
+  .timeline{background:var(--ink-2);}
+  .move{
+    display:grid;
+    grid-template-columns:110px 1fr;
+    gap:2rem;
+    padding:2.2rem 0;
+    border-top:1px solid var(--line);
+    opacity:0;
+    transform:translateY(40px);
+    transition:opacity 0.8s ease, transform 0.8s ease;
+  }
+  .move:last-child{border-bottom:1px solid var(--line);}
+  .move.in-view{opacity:1;transform:translateY(0);}
+  .move .move-no{
+    font-family:'JetBrains Mono',monospace;
+    color:var(--gold);
+    font-size:1rem;
+    padding-top:0.2rem;
+  }
+  .move .move-body h3{
+    font-size:1.3rem;color:var(--ivory);margin-bottom:0.4rem;
+  }
+  .move .move-body .meta{
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.75rem;color:var(--slate);
+    letter-spacing:0.05em;
+  }
+  .move .crest{
+    display:flex;align-items:center;gap:0.9rem;margin-top:0.9rem;
+  }
+  .move .crest-badge{
+    background:var(--ivory);border-radius:50%;
+    width:44px;height:44px;flex-shrink:0;
+    display:flex;align-items:center;justify-content:center;
+  }
+  .move .crest span{
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.75rem;color:var(--gold);
+  }
+
+  /* ---------- HOBBY ---------- */
+  .hobby{background:var(--ink);overflow:hidden;}
+  .hobby-wrap{
+    position:relative;
+    display:grid;
+    grid-template-columns:1fr;
+    justify-items:center;
+    text-align:center;
+  }
+  .hobby-scene{
+    position:relative;
+    width:100%;
+    max-width:760px;
+    aspect-ratio:16/7.5;
+    margin:2rem auto -1.5rem;
+  }
+  .drift{
+    position:absolute;
+    will-change:transform;
+  }
+  .hobby-copy{max-width:640px;margin:0 auto;margin-top:0.5rem;}
+  .hobby-copy p{color:var(--ivory-dim);line-height:1.85;font-size:1.05rem;}
+
+  /* floating pieces around hobby */
+  .float-piece{position:absolute;opacity:0.55;will-change:transform;}
+
+  /* ---------- CONTACT ---------- */
+  .contact{
+    background:var(--ink-2);
+    text-align:center;
+  }
+  .contact h2{font-size:clamp(2rem,5vw,3.4rem);margin-bottom:1.4rem;}
+  .contact p{color:var(--ivory-dim);max-width:520px;margin:0 auto 2.4rem;line-height:1.8;}
+  .quote-box{
+    max-width:560px;margin:0 auto 2.6rem;
+    padding:1.8rem 2rem;
+    border-left:2px solid var(--gold);
+    background:rgba(198,161,91,0.06);
+    font-family:'Fraunces',serif;
+    font-style:italic;
+    font-size:1.15rem;
+    line-height:1.75;
+    color:var(--ivory);
+    text-align:left;
+  }
+  .links{
+    display:flex;justify-content:center;gap:2.4rem;flex-wrap:wrap;
+    font-family:'JetBrains Mono',monospace;font-size:0.85rem;
+  }
+  .links a{color:var(--ivory);text-decoration:none;border-bottom:1px solid var(--gold);padding-bottom:2px;transition:color 0.3s;}
+  .links a:hover{color:var(--gold);}
+  footer{
+    text-align:center;padding:2.4rem 1rem;
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.7rem;color:var(--slate);letter-spacing:0.08em;
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    *{animation:none !important; transition:none !important;}
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <span class="mark">M.J.A.B</span>
+  <span class="coord" id="navCoord">a1</span>
+</nav>
+
+<!-- ===================== HERO ===================== -->
+<section class="hero">
+  <div class="board3d" id="board3d"></div>
+
+  <svg class="hero-piece" data-speed="-0.25" style="width:70px;left:12%;top:20%;" viewBox="0 0 100 160" fill="none">
+    <path d="M50 6c-8 0-14 6-14 13 0 5 3 9 7 11l-9 20h32l-9-20c4-2 7-6 7-11 0-7-6-13-14-13z" fill="#c6a15b"/>
+    <path d="M22 60h56l10 60H12l10-60z" fill="#f2ecdc"/>
+    <rect x="14" y="120" width="72" height="14" rx="2" fill="#f2ecdc"/>
+  </svg>
+
+  <svg class="hero-piece" data-speed="0.3" style="width:56px;right:14%;top:32%;" viewBox="0 0 100 160" fill="none">
+    <path d="M30 150c-2-30 4-46 4-62 0-8-6-14-6-26 0-16 14-30 22-30 4 8-2 14 2 22 10-4 22 4 24 18 2 14-8 20-8 34 0 16 6 30 4 44H30z" fill="#f2ecdc"/>
+  </svg>
+
+  <div class="hero-content">
+    <span class="eyebrow">Portofolio &mdash; White to move</span>
+    <h1>Marco Julius<br><em>Andreas Bakkara</em></h1>
+    <div class="hero-sub">Batam, 26.07.2008 &nbsp;·&nbsp; Universitas Sumatera Utara</div>
+  </div>
+
+  <div class="scroll-cue"><span>SCROLL</span><span class="line"></span></div>
+</section>
+
+<!-- ===================== ABOUT ===================== -->
+<section class="about" id="tentang">
+  <div class="file-rank-bg" id="fileRankBg"></div>
+  <div class="section-inner">
+    <div class="section-head" data-parallax data-speed="0.05">
+      <span class="num">01 — Notasi Pembuka</span>
+      <h2>Tentang Saya</h2>
+    </div>
+    <div class="about-grid">
+      <div class="about-text" data-parallax data-speed="0.06">
+        <p>Saya Marco Julius Andreas Bakkara, seorang pelajar yang senang menyusun langkah — baik di atas papan catur maupun dalam merancang sesuatu yang baru. Bagi saya, setiap proses belajar itu seperti permainan catur: butuh kesabaran, strategi, dan keberanian mengambil langkah berikutnya.</p>
+        <p>Halaman ini adalah papan skor perjalanan saya sejauh ini — dari bangku sekolah dasar hingga bangku kuliah, disusun senotasi mungkin, sesederhana mungkin.</p>
+      </div>
+      <div class="id-card" data-parallax data-speed="-0.05">
+        <div class="row"><span>Nama</span><span>Marco Julius A. Bakkara</span></div>
+        <div class="row"><span>Tempat, Tgl Lahir</span><span>Batam, 26-07-2008</span></div>
+        <div class="row"><span>Domisili</span><span>Sumatera Utara</span></div>
+        <div class="row"><span>Hobi</span><span>Catur</span></div>
+        <div class="row"><span>Status</span><span>Mahasiswa — USU</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== PENDIDIKAN ===================== -->
+<section class="timeline" id="pendidikan">
+  <div class="section-inner">
+    <div class="section-head" data-parallax data-speed="0.05">
+      <span class="num">02 — Rangkaian Langkah</span>
+      <h2>Riwayat Pendidikan</h2>
+    </div>
+
+    <div class="move">
+      <div class="move-no">1.</div>
+      <div class="move-body">
+        <h3>SD Negeri 122335</h3>
+        <div class="meta">SEKOLAH DASAR</div>
+      </div>
+    </div>
+
+    <div class="move">
+      <div class="move-no">2.</div>
+      <div class="move-body">
+        <h3>SMP Negeri 5 Pematangsiantar</h3>
+        <div class="meta">SEKOLAH MENENGAH PERTAMA</div>
+      </div>
+    </div>
+
+    <div class="move">
+      <div class="move-no">3.</div>
+      <div class="move-body">
+        <h3>SMK Negeri 1 Pematangsiantar</h3>
+        <div class="meta">SEKOLAH MENENGAH KEJURUAN</div>
+      </div>
+    </div>
+
+    <div class="move">
+      <div class="move-no">4.</div>
+      <div class="move-body">
+        <h3>Universitas Sumatera Utara</h3>
+        <div class="meta">KULIAH</div>
+        <div class="crest">
+          <div class="crest-badge">
+            <img src="https://i.postimg.cc/hJj3dYfj/images-(2).jpg" alt="Logo resmi Universitas Sumatera Utara" width="34" height="34" style="display:block;object-fit:contain;" onerror="this.replaceWith(Object.assign(document.createElement('span'),{textContent:'USU',style:'font-family:JetBrains Mono, monospace;font-size:11px;font-weight:600;color:#14120f;'}))">
+          </div>
+          <span>D4 &mdash; Teknologi Rekayasa Instrumentasi</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ===================== HOBI CATUR ===================== -->
+<section class="hobby" id="hobi">
+  <div class="section-inner hobby-wrap">
+    <div class="section-head" data-parallax data-speed="0.05">
+      <span class="num">03 — Posisi Favorit</span>
+      <h2>Hobi: Catur</h2>
+    </div>
+
+    <div class="hobby-scene">
+      <!-- floating decorative pieces -->
+      <svg class="float-piece" data-speed="-0.4" style="width:34px;left:4%;top:6%;" viewBox="0 0 100 160" fill="#c6a15b">
+        <path d="M50 6c-8 0-14 6-14 13 0 5 3 9 7 11l-9 20h32l-9-20c4-2 7-6 7-11 0-7-6-13-14-13z"/>
+      </svg>
+      <svg class="float-piece" data-speed="0.35" style="width:30px;right:6%;top:10%;" viewBox="0 0 100 160" fill="#f2ecdc">
+        <path d="M30 150c-2-30 4-46 4-62 0-8-6-14-6-26 0-16 14-30 22-30 4 8-2 14 2 22 10-4 22 4 24 18 2 14-8 20-8 34 0 16 6 30 4 44H30z"/>
+      </svg>
+      <svg class="float-piece" data-speed="0.5" style="width:26px;left:10%;bottom:4%;" viewBox="0 0 100 160" fill="#7a4b27">
+        <circle cx="50" cy="30" r="18"/><path d="M20 140h60l-8-70H28l-8 70z"/>
+      </svg>
+
+      <!-- two figures thinking over a board -->
+      <svg viewBox="0 0 640 380" width="100%" height="100%" data-parallax data-speed="-0.06">
+        <!-- table legs -->
+        <rect x="270" y="290" width="8" height="60" fill="#4a2d17"/>
+        <rect x="362" y="290" width="8" height="60" fill="#4a2d17"/>
+        <!-- table top -->
+        <rect x="230" y="270" width="180" height="20" rx="3" fill="#7a4b27"/>
+
+        <!-- mini board on table -->
+        <g id="miniBoard" transform="translate(248,236)"></g>
+
+        <!-- left figure: chair + body + head, leaning forward thinking -->
+        <g>
+          <rect x="120" y="300" width="14" height="70" fill="#3a3327"/>
+          <path d="M150 372c-4-40 6-70 20-88 10-13 8-30 8-30" fill="none" stroke="#f2ecdc" stroke-width="14" stroke-linecap="round"/>
+          <path d="M178 254c-2-16 8-28 24-28s26 12 24 28c14 8 20 24 12 40-10-6-20-6-30-2-4-14-14-22-30-24z" fill="#f2ecdc"/>
+          <circle cx="204" cy="196" r="24" fill="#f2ecdc"/>
+          <!-- hand on chin -->
+          <path d="M188 216c-6 8-8 16-4 24" stroke="#c6a15b" stroke-width="7" stroke-linecap="round" fill="none"/>
+        </g>
+
+        <!-- right figure -->
+        <g>
+          <rect x="506" y="300" width="14" height="70" fill="#5c5648"/>
+          <path d="M492 372c4-40-6-70-20-88-10-13-8-30-8-30" fill="none" stroke="#c9c3af" stroke-width="14" stroke-linecap="round"/>
+          <path d="M462 254c2-16-8-28-24-28s-26 12-24 28c-14 8-20 24-12 40 10-6 20-6 30-2 4-14 14-22 30-24z" fill="#c9c3af"/>
+          <circle cx="436" cy="196" r="24" fill="#c9c3af"/>
+          <path d="M452 216c6 8 8 16 4 24" stroke="#7a4b27" stroke-width="7" stroke-linecap="round" fill="none"/>
+        </g>
+      </svg>
+    </div>
+
+    <div class="hobby-copy" data-parallax data-speed="0.04">
+      <p>Bagi saya, catur bukan sekadar permainan — tetapi latihan berpikir jangka panjang. Setiap langkah harus dipikirkan matang, sama seperti setiap keputusan dalam hidup: ada risiko, ada peluang, dan ada konsekuensi dari setiap pilihan yang diambil.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== CONTACT ===================== -->
+<section class="contact" id="kontak">
+  <div class="section-inner">
+    <span class="eyebrow">Checkmate? Belum.</span>
+    <h2>Mari terhubung.</h2>
+    <blockquote class="quote-box">
+      “Dalam pergaulan seperti dalam catur — langkah terbaik bukan yang tercepat, tapi yang paling memahami lawan bicara sebelum melangkah.”
+    </blockquote>
+    <div class="links">
+      <a href="mailto:tupabakara@gmail.com">tupabakara@gmail.com</a>
+      <a href="https://www.linkedin.com/in/marco-julius-andreas-bakkara-69a376379/" target="_blank" rel="noopener">LinkedIn</a>
+      <a href="https://wa.me/6281265260675" target="_blank" rel="noopener">WhatsApp (only) 0812-6526-0675</a>
+    </div>
+  </div>
+</section>
+
+<footer>© 2026 MARCO JULIUS ANDREAS BAKKARA — DESAIN & KODE POLOSAN, ANIMASI PENUH.</footer>
+
+<script>
+(function(){
+  // ---- build 8x8 board ----
+  const board = document.getElementById('board3d');
+  for(let r=0;r<8;r++){
+    for(let c=0;c<8;c++){
+      const sq = document.createElement('div');
+      sq.className = 'sq' + (((r+c)%2===1) ? ' dark' : '');
+      board.appendChild(sq);
+    }
+  }
+
+  // ---- mini board inside hobby illustration (4x4) ----
+  const mb = document.getElementById('miniBoard');
+  const size = 22.5;
+  for(let r=0;r<4;r++){
+    for(let c=0;c<4;c++){
+      const rect = document.createElementNS('http://www.w3.org/2000/svg','rect');
+      rect.setAttribute('x', c*size);
+      rect.setAttribute('y', r*size);
+      rect.setAttribute('width', size);
+      rect.setAttribute('height', size);
+      rect.setAttribute('fill', ((r+c)%2===0) ? '#f2ecdc' : '#4a2d17');
+      mb.appendChild(rect);
+    }
+  }
+
+  // ---- file/rank faint background letters ----
+  const frb = document.getElementById('fileRankBg');
+  'ABCDEFGH'.split('').forEach(l=>{
+    const s = document.createElement('span');
+    s.textContent = l;
+    frb.appendChild(s);
+  });
+
+  // ---- nav coordinate readout ----
+  const files = 'abcdefgh', navCoord = document.getElementById('navCoord');
+
+  // ---- parallax + tilt on scroll ----
+  const parallaxEls = document.querySelectorAll('[data-parallax], .hero-piece, .float-piece');
+  let ticking = false;
+
+  function update(){
+    const y = window.scrollY;
+    const vh = window.innerHeight;
+
+    // hero board tilt intensifies slightly as user scrolls away
+    const tilt = 58 + Math.min(y * 0.02, 14);
+    board.style.transform = `translate(-50%,-50%) rotateX(${tilt}deg) rotateZ(45deg) translateZ(${-y*0.15}px)`;
+
+    parallaxEls.forEach(el=>{
+      const speed = parseFloat(el.dataset.speed || 0);
+      el.style.transform = `translate3d(0, ${y*speed*-1}px, 0)`;
+    });
+
+    // nav coordinate: map scroll position to a file/rank string
+    const progress = Math.min(y / (document.body.scrollHeight - vh), 1);
+    const fileIdx = Math.floor(progress * 7);
+    const rank = 8 - Math.floor(progress * 7);
+    navCoord.textContent = files[fileIdx] + rank;
+
+    ticking = false;
+  }
+
+  window.addEventListener('scroll', ()=>{
+    if(!ticking){ requestAnimationFrame(update); ticking = true; }
+  }, {passive:true});
+  update();
+
+  // ---- reveal timeline moves ----
+  const moves = document.querySelectorAll('.move');
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(entry=>{
+      if(entry.isIntersecting){
+        entry.target.classList.add('in-view');
+      }
+    });
+  }, {threshold:0.25});
+  moves.forEach(m=>io.observe(m));
+
+})();
+</script>
+</body>
+</html>
